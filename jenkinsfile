@@ -1,0 +1,42 @@
+pipeline{
+	agent any
+	tools{
+		maven "Maven-vch"
+	}
+		stages{
+           stage("fetch code from github repo car-api-project"){
+	    
+               steps{
+	                 git url :"https://github.com/vinaych-devops/car-api-project.git"
+              }
+          }
+          stage("Compile"){
+             
+              steps{
+              sh 'mvn compile'
+	      }
+          }
+          stage("test"){
+		  
+              steps{
+		          sh 'mvn test'
+              }
+          }
+           stage("qa"){
+		  
+              steps{
+	         
+                  sh 'mvn pmd:pmd'
+              }
+                             }
+          stage("Package"){
+		  
+              steps{
+		  
+                  sh 'mvn package'
+              }
+          }
+	     
+          
+      }
+}
